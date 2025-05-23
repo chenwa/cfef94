@@ -43,9 +43,13 @@ const PrefillDataModal: React.FC<PrefillDataModalProps> = ({ open, sources, onSe
                 alignItems: 'center',
                 background: isFirstName ? '#fff' : (selected === node.value ? '#e3f0fd' : undefined),
                 borderRadius: 4,
-                padding: '2px 4px',
+                padding: isExpandable ? '6px 4px' : '2px 4px',
                 cursor: isExpandable ? 'pointer' : 'default',
                 marginBottom: 2,
+                fontWeight: isExpandable ? 600 : 400,
+                fontSize: isExpandable ? 22 : 15,
+                color: isExpandable ? '#222' : '#444',
+                transition: 'background 0.15s',
               }}
               onClick={() => {
                 if (isExpandable) {
@@ -56,13 +60,13 @@ const PrefillDataModal: React.FC<PrefillDataModalProps> = ({ open, sources, onSe
               }}
             >
               {isExpandable && (
-                <span style={{ marginRight: 4, fontSize: 12 }}>
-                  {expanded[key] ? '▼' : '▶'}
+                <span style={{ marginRight: 8, fontSize: 18, userSelect: 'none', transition: 'transform 0.2s', transform: expanded[key] ? 'rotate(90deg)' : 'rotate(0deg)' }}>
+                  ▶
                 </span>
               )}
               <span
                 style={{
-                  fontWeight: isExpandable ? 500 : 400,
+                  fontWeight: isExpandable ? 600 : 400,
                   color: isFirstName ? '#111' : (isExpandable ? '#222' : '#444'),
                   marginLeft: isExpandable ? 0 : 16,
                   background: isFirstName ? '#fff' : undefined,
@@ -108,7 +112,7 @@ const PrefillDataModal: React.FC<PrefillDataModalProps> = ({ open, sources, onSe
         display: 'flex',
         flexDirection: 'column',
       }}>
-        <div style={{ padding: '20px 24px 8px 24px', borderBottom: '1px solid #eee', fontWeight: 600, fontSize: 20 }}>
+        <div style={{ padding: '20px 24px 8px 24px', borderBottom: '1px solid #eee', fontWeight: 600, fontSize: 20, color: '#111' }}>
           Select data element to map
         </div>
         <div style={{ display: 'flex', flex: 1, minHeight: 0 }}>
@@ -118,7 +122,7 @@ const PrefillDataModal: React.FC<PrefillDataModalProps> = ({ open, sources, onSe
               placeholder="Search"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              style={{ width: '100%', marginBottom: 12, padding: 6, borderRadius: 4, border: '1px solid #ccc' }}
+              style={{ width: '100%', backgroundColor: '#fff', marginBottom: 12, padding: 6, borderRadius: 4, border: '1px solid #ccc' }}
             />
             {sources.map((src, i) => (
               <div key={src.label} style={{ marginBottom: 8 }}>

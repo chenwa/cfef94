@@ -139,6 +139,33 @@ function App() {
     directDeps.forEach(d => transitiveDeps.delete(d))
     // 2. Build data sources
     const sources: DataSource[] = []
+    // Add global data sources as dropdowns (expandable like forms) FIRST
+    sources.push({
+      label: 'Action Properties',
+      nodes: [
+        {
+          label: 'Action Properties',
+          value: 'action',
+          children: [
+            { label: 'action_id', value: 'action.action_id' },
+            { label: 'action_type', value: 'action.action_type' }
+          ]
+        }
+      ]
+    })
+    sources.push({
+      label: 'Client Organisation Properties',
+      nodes: [
+        {
+          label: 'Client Organisation Properties',
+          value: 'org',
+          children: [
+            { label: 'org_id', value: 'org.org_id' },
+            { label: 'org_name', value: 'org.org_name' }
+          ]
+        }
+      ]
+    })
     // Direct dependencies
     if (directDeps.size) {
       sources.push({
@@ -161,14 +188,6 @@ function App() {
         }))
       })
     }
-    // Global data (mocked)
-    sources.push({
-      label: 'Global Data',
-      nodes: [
-        { label: 'user_id', value: 'global.user_id' },
-        { label: 'org_name', value: 'global.org_name' },
-      ]
-    })
     return sources
   }
 

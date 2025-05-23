@@ -1,54 +1,34 @@
-# React + TypeScript + Vite
+## Documentation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### How do I run this locally?
 
-Currently, two official plugins are available:
+1. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+2. **Start the development server:**
+   ```sh
+   npm run dev
+   ```
+3. Open your browser to the local address shown in the terminal (usually `http://localhost:5173`).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### How do I extend with new data sources?
 
-## Expanding the ESLint configuration
+- Currently the project is being run on mock data. Replace the files in src/api/ with real api calls to add more data.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- NOTE: it is currently being run with mock data because I was having trouble calling the api listed in the docs as it was returning a 401 unauthorized error.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### What patterns should I be paying attention to?
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **Data-driven UI:**
+  - The modal and graph are rendered based on the data structure returned from the mock API and the `globalDataSources` array. Adding or changing data sources or forms does not require UI code changes.
+- **Expandable Dropdowns:**
+  - Data sources and forms with nested fields are rendered as expandable dropdowns in the modal, using a recursive tree pattern.
+- **State Management:**
+  - React `useState` and `useEffect` are used for managing graph data, selection, and prefill mappings.
+- **Separation of Concerns:**
+  - Data fetching, UI rendering, and data source definitions are separated into different files/modules for maintainability.
+- **TypeScript Types:**
+  - Types are defined for graph structure, edges, and data sources to ensure type safety and easier refactoring.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+---
